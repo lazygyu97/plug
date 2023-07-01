@@ -22,11 +22,45 @@ repositories {
 }
 
 dependencies {
+
+    // JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // MySQL
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // json
+    implementation 'org.json:json:20230227'
+
+    // JWT
+    compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+
+    //validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    //spotify API
+    //참조 문헌 : https://chaerim1001.tistory.com/51
+    implementation 'com.github.thelinmichael:spotify-web-api-java:master-SNAPSHOT'
+
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+}
+
+//spotify API Github repository
+// 참조 문헌 : https://chaerim1001.tistory.com/51
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
 }
 
 tasks.named('test') {
