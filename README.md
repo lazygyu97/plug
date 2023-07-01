@@ -54,6 +54,7 @@
 ![스크린샷 2023-06-30 오후 4 06 52](https://github.com/lazygyu97/plug/assets/97361049/f543fb99-36ad-44b7-80af-7ff96095eb29)
 ![스크린샷 2023-06-30 오후 4 07 09](https://github.com/lazygyu97/plug/assets/97361049/175edc71-70fa-4ebc-952f-2595a36fd89b)
 ![스크린샷 2023-06-30 오후 4 08 59](https://github.com/lazygyu97/plug/assets/97361049/9131f77a-056d-4fa4-ace5-5366a441fe15)
+![스크린샷 2023-06-30 오후 5 25 37](https://github.com/lazygyu97/plug/assets/97361049/33e5dd8f-3d00-4587-a531-8a89f70ba7fe)
 ![스크린샷 2023-06-30 오후 4 09 15](https://github.com/lazygyu97/plug/assets/97361049/6c59ec21-733e-4f3a-9338-eb1de4dc20e6)
 ![스크린샷 2023-06-30 오후 5 25 59](https://github.com/lazygyu97/plug/assets/97361049/9a1798ef-2a99-4d34-97dc-39eb2970685f)
 ![스크린샷 2023-06-30 오후 5 26 14](https://github.com/lazygyu97/plug/assets/97361049/822ac119-0516-42a1-a7d3-8d5d78aff821)
