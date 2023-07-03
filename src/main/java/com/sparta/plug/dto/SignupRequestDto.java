@@ -16,7 +16,7 @@ public class SignupRequestDto {
     private String password;
 
     @NotBlank
-    @Pattern(regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "유효한 이메일 형식이 아닙니다.")
     private String email;
     private boolean admin = false;
     private String adminToken = "";
