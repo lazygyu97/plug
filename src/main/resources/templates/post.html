@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .profile-img{
+      border-radius: 70%;
+    }
+  </style>
+  <script>
+    function writePost() {
+      // 1. 작성한 메모를 불러옵니다.
+      let contents = $('#comment').val();
+
+      // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
+      // if (isValidContents(comment) == false) {
+      //     return;
+      // }
+
+      // 4. 전달할 data JSON으로 만듭니다.
+      let data = {'comment': comment};
+
+      // 5. POST /api/memos 에 data를 전달합니다.
+      $.ajax({
+        type: "POST",
+        url: "/plug/detail/{id}",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (response) {
+          alert('댓글이 성공적으로 작성되었습니다.');
+          window.location.reload();
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+<div class = "header"><!--배너, 회원 정보-->
+  <h2>PLUG</h2>
+  <h4><span th:text="${Users.userName}"></span>님</h4>
+</div>
+<div>
+  <div id="pli-info"> <!--플리 정보-->
+    <div id="img" class="img">
+      <img class="profile-img" src="../image/cute.png" >
+    </div>
+    <p id="title">플레이리스트 제목</p>
+    <p id="info">플레이리스트 설명</p>
+  </div>
+  <div id="play-list"><!--플레이 리스트 입력-->
+    <div id="contain-music">
+      <table border="1"> <!--담은 음악 리스트-->
+        <caption>담은 음악</caption>
+        <thead>
+        <tr>
+          <th>곡 제목</th>
+          <th>아티스트</th>
+        </tr>
+        </thead>
+        <tbody id="contain-list">
+        <tr> <!--이부분 반복-->
+          <td>title1</td> <!--등록한 값 출력 - 이거 맞나...-->
+          <td>artist1</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div>
+        <textarea placeholder="댓글을 작성하세요" class="comment"></textarea>
+        <img src="../image/done.png" onclick="">
+      </div>
+      <div id="comment-box">
+        <div class="comment">
+          <!-- date/username 영역 -->
+          <div class="metadata">
+            <div class="date">
+              October 10, 2020
+            </div>
+            <div class="username">
+              anonymous
+            </div>
+          </div>
+          <!-- contents 조회/수정 영역-->
+          <div class="comment">
+
+          </div>
+          <!-- 버튼 영역-->
+          <div class="footer">
+            <img id="1-edit" class="icon-start-edit" src="../image/edit.png" alt="" onclick="">
+            <img id="1-delete" class="icon-delete" src="../image/delete.png" alt="" onclick="">
+            <img id="1-submit" class="icon-end-edit" src="../image/done.png" alt="" onclick="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="footer"></div>
+</body>
+</html>
