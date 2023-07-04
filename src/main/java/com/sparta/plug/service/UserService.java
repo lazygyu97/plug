@@ -16,7 +16,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private  final JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
@@ -55,7 +55,7 @@ public class UserService {
         }
 
         // 사용자 등록
-        User user = new User(username, password, email,role);
+        User user = new User(username, password, email, role);
         userRepository.save(user);
     }
 

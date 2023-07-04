@@ -1,5 +1,6 @@
 package com.sparta.plug.entity;
 
+import com.sparta.plug.dto.PostRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ public class Post {
 
     //작성한 유저의 정보를 담아 유저 테이블의 외래키로 사용할 칼럼을 생각해야한다.
     @Column(nullable = false, unique = true)
-    private Long userId;
+    private String user;
 
     @Column(nullable = false, unique = true)
     private String title;
@@ -33,4 +34,9 @@ public class Post {
     private Long like;
 
 
+    public Post(PostRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.info = requestDto.getInfo();
+        this.imageUrl = requestDto.getImageUrl();
+    }
 }
