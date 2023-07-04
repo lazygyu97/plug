@@ -1,5 +1,6 @@
 package com.sparta.plug.entity;
 
+import com.sparta.plug.dto.PostRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,27 +11,40 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Table(name = "posts")
-public class Post {
+public class Post extends TimeStamped{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //작성한 유저의 정보를 담아 유저 테이블의 외래키로 사용할 칼럼을 생각해야한다.
-    @Column(nullable = false, unique = true)
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String info;
 
     @Column(nullable = false)
     private String imageUrl;
 
-    @Column(nullable = false, unique = true)
-    private Long like;
+    @Column(nullable = false)
+    private String author;
 
+
+
+    public Post(PostRequestDto requestDto,User user){
+        this.title=requestDto.getTitle();
+        this.info= requestDto.getInfo();
+        this.imageUrl=requestDto.getImageUrl();
+        this.author=user.getNickName();
+        this.user=user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 }

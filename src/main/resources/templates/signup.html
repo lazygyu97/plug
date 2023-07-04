@@ -30,13 +30,17 @@
   <div id="login-title">Sign up Select Shop</div>
 
   <form action="/api/user/signup" method="post">
-    <div class="login-id-label">Username</div>
+
+    <div class="login-id-label">이름 또는 별명</div>
+    <input type="text" name="nickName" placeholder="nickname" class="login-input-box">
+
+    <div class="login-id-label">아이디</div>
     <input type="text" name="username" placeholder="Username" class="login-input-box">
 
-    <div class="login-id-label">Password</div>
+    <div class="login-id-label">비밀번호</div>
     <input type="password" name="password" class="login-input-box">
 
-    <div class="login-id-label">E-mail</div>
+    <div class="login-id-label">이메일</div>
     <input type="text" name="email" placeholder="E-mail" class="login-input-box">
 
     <div>

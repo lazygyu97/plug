@@ -8,32 +8,50 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
 
     <link rel="stylesheet" href="/css/style.css">
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
     <script src="/js/basic.js"></script>
     <title>PLUG::우리들의 플레이리스트 공유 공간</title>
 </head>
 <body>
 <div class="header" style="position:relative;">
+
     <div id="login-true" style="display: none">
         <div id="header-title-login-user">
-            <span th:text="${username}"></span> 님의
+            <span th:text="${nickname}"></span>님 환영합니다!
+            <a href="/api/user/detail">마이페이지</a>
         </div>
-        <div id="header-title-select-shop">
-            PLUG
+        <div>
+            <img src="/images/Logo.png">
         </div>
-        <a id="login-text" href="javascript:logout()">
+        <a href="javascript:logout()">
             로그아웃
         </a>
+        <a id="post-create" href="/post-page">
+            글쓰기
+        </a>
     </div>
-    <div id="login-false" >
-        <div id="header-title-select-shop">
+
+    <div id="login-false">
+        <div>
             PLUG
         </div>
-        <a id="login-text" href="/api/user/login-page">
+        <a href="/api/user/login-page">
             로그인
         </a>
     </div>
+
+    <!-- 리스트 데이터를 반복하며 출력 -->
+    <div th:each="post : ${list}">
+        <ul>
+
+            <li th:text="${post.getAuthor()}"></li>
+            <li th:text="${post.getTitle()}"></li>
+        </ul>
+    </div>
+
+
 </div>
 </body>
 </html>

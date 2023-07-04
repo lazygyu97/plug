@@ -31,6 +31,7 @@ public class UserService {
     public void signup(SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
+        String nickName = requestDto.getNickName();
 
         // 회원 중복 확인 --> Entity 에서도  @Column(nullable = false, unique = true) 이런식으로 고유값으로 선언해야한다
         Optional<User> checkUsername = userRepository.findByUsername(username);
@@ -55,7 +56,7 @@ public class UserService {
         }
 
         // 사용자 등록
-        User user = new User(username, password, email,role);
+        User user = new User(nickName,username, password, email,role);
         userRepository.save(user);
     }
 
