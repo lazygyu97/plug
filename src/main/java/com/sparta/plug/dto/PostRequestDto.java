@@ -14,16 +14,4 @@ public class PostRequestDto {
     private String info;
     private String imageUrl;
 
-/*
-    private List musicList;
-    private String musicTitle;
-    private String artist;
-    private Long like;
-*/
-
-/*    private String password;
-    private boolean deleteFlag;
-
-    private String keyword;*/
-
 }
