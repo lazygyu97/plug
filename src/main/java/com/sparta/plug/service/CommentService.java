@@ -35,4 +35,21 @@ public class CommentService {
 
         return new CommentResponseDto(savedComment);
     }
+
+    public void updateComment(Long id, CommentRequestDto requestDto, User user) {
+        Comment comment = commentRepository.findById(id).orElseThrow();
+        
+    }
+
+    public void deleteComment(Long id, User user) {
+        Comment comment = commentRepository.findById(id).orElseThrow();
+        
+        // 삭제 요청자가 댓글 작성자인지 확인
+        if(user.getId().equals(comment.getUser())) {
+            commentRepository.delete(comment);
+            System.out.println("댓글 삭제를 성공했습니다.");
+        } else {
+            System.out.println("댓글 삭제를 실패했습니다.");
+        }
+    }
 }

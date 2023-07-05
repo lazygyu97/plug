@@ -44,7 +44,7 @@
     <!-- 리스트 데이터를 반복하며 출력 -->
     <div>
         <div class="card" style="width: 18rem;" th:each="post : ${list}">
-            <div class="post-link" th:data-post-id="${post.getId()}">
+            <div class="post-link" th:data-post-id="${post.getId()}"> <!---->
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${post.getTitle()}">Card title</h5>
