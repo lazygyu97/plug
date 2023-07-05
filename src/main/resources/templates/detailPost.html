@@ -17,7 +17,7 @@
         <li>등록된 댓글이 없습니다.</li>
     </ul>
     <ul th:unless="${list.size() == 0}">
-        <li th:each="comment : ${list}">
+        <li th:each="comment : ${list}"> <!--수정, 삭제 버튼 생성-->
             <span th:text="${comment.getBody()}"></span>
             <span th:text="${comment.getUsername()}"></span>
         </li>
@@ -25,7 +25,7 @@
 </div>
 
 <div id="comment-form">
-    <form th:action="@{/api/comment}" method="post">
+    <form th:action="@{/api/comment}" method="post"> <!--삭제, 수정 코멘트의 api 아이디-->
         <input type="hidden" name="postId" th:value="${post.getId()}">
         <input type="text" name="body" placeholder="댓글을 입력하세요" required>
         <button type="submit" id="comment-id-submit">댓글 등록</button>
