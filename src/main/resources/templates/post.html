@@ -21,7 +21,7 @@
         <div class="post-id-label">이미지</div>
         <input type="text" name="imageUrl" placeholder="imageUrl" class="post-input-box">
 
-        <!-- 선택한 트랙 리스트를 전송하기 위한 숨겨진 입력 필드 -->
+        <!-- 선택한 트랙 리스트를 전송하기 위한 입력 필드 -->
         <input type="text" name="selectedTracks" id="selectedTracksInput">
 
         <button type="button" id="confirmButton">확인</button>
@@ -61,7 +61,9 @@
         // 선택한 트랙을 선택한 트랙 리스트에 저장
         selectedTracks.push({
             name: track.name,
-            artist: track.artists[0].name
+            artist: track.artists[0].name,
+            imageUrl: track.album.images[0].url, // 이미지 URL 추가
+            previewUrl: track.preview_url // 미리듣기 URL 추가
         });
     }
 

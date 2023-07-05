@@ -43,15 +43,18 @@
 
     <!-- 리스트 데이터를 반복하며 출력 -->
     <div>
-
-
-            <ul th:each="post : ${list}">
-                <div class="post-link" th:data-post-id="${post.getId()}">
-                <li th:text="${post.getAuthor()}"></li>
-                <li th:text="${post.getTitle()}"></li>
+        <div class="card" style="width: 18rem;" th:each="post : ${list}">
+            <div class="post-link" th:data-post-id="${post.getId()}">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${post.getTitle()}">Card title</h5>
+                    <p class="card-text" th:text="${post.getInfo()}">Some quick example text to build on the card title
+                        and make up the bulk of the card's content.</p>
+                    <p class="card-text" th:text="${post.getAuthor()}">Some quick example text to build on the card
+                        title and make up the bulk of the card's content.</p>
                 </div>
-            </ul>
-
+            </div>
+        </div>
     </div>
 
 

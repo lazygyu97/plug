@@ -1,6 +1,7 @@
 package com.sparta.plug.entity;
 
 import com.sparta.plug.dto.PostRequestDto;
+import com.wrapper.spotify.model_objects.specification.Playlist;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,7 +39,8 @@ public class Post extends TimeStamped{
     @Column(nullable = false)
     private String author;
 
-
+//    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+//    private List<Playlist> playlists;
 
     public Post(PostRequestDto requestDto,User user){
         this.title=requestDto.getTitle();

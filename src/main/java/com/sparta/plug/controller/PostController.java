@@ -3,6 +3,7 @@ package com.sparta.plug.controller;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sparta.plug.dto.CommentResponseDto;
+import com.sparta.plug.dto.PlayListRequestDto;
 import com.sparta.plug.dto.PostRequestDto;
 import com.sparta.plug.dto.PostResponseDto;
 import com.sparta.plug.security.UserDetailsImpl;
@@ -34,10 +35,11 @@ public class PostController {
         String selectedTracksJson = postRequestDto.getSelectedTracks();
         Gson gson = new Gson();
 
-        List<PostRequestDto.Track> selectedTracks = gson.fromJson(selectedTracksJson, new TypeToken<List<PostRequestDto.Track>>(){}.getType());
+        List<PlayListRequestDto> selectedTracks = gson.fromJson(selectedTracksJson, new TypeToken<List<PlayListRequestDto>>(){}.getType());
         postRequestDto.setTrackList(selectedTracks);
-        System.out.println("selectedTracks.get(0) = " + selectedTracks.get(0).getArtist());
+
         postService.createPost(postRequestDto, userDetails.getUser());
+
 
         return "redirect:/";
     }

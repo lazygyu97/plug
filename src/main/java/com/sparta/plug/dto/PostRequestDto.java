@@ -2,7 +2,6 @@ package com.sparta.plug.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 
@@ -10,23 +9,14 @@ import java.util.List;
 @Setter
 public class PostRequestDto {
 
-
-
+    //valid 어노테이션을 통해 입력받은 값의 검증이 필요하다.
     private String title;
-
     private String info;
-
     private String imageUrl;
-
     private String selectedTracks;
-    private List<Track> trackList;
+    private List<PlayListRequestDto> trackList;
 
-    @Getter
-    public static class Track {
-        private String name;
-        private String artist;
 
-    }
 
 }
 
