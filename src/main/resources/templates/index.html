@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 
-    <link rel="stylesheet" href="/css/style.css">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
             integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
@@ -43,15 +42,29 @@
     </div>
 
     <!-- 리스트 데이터를 반복하며 출력 -->
-    <div th:each="post : ${list}">
-        <ul>
+    <div>
 
-            <li th:text="${post.getAuthor()}"></li>
-            <li th:text="${post.getTitle()}"></li>
-        </ul>
+
+            <ul th:each="post : ${list}">
+                <div class="post-link" th:data-post-id="${post.getId()}">
+                <li th:text="${post.getAuthor()}"></li>
+                <li th:text="${post.getTitle()}"></li>
+                </div>
+            </ul>
+
     </div>
 
 
 </div>
 </body>
+
+<script>
+    $(document).ready(function () {
+        // 리스트 데이터를 반복하며 출력된 div.post-link에 클릭 이벤트 바인딩
+        $(".post-link").click(function () {
+            var postId = $(this).data("post-id");
+            window.location.href = "/api/post/" + postId;
+        });
+    });
+</script>
 </html>

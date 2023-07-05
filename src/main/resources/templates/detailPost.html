@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'PLUG::'+${post.getTitle()}">Title</title>
+</head>
+<body>
+<div>
+    <p th:text="${post.getTitle()}"></p>
+    <p th:text="${post.getInfo()}"></p>
+    <p th:text="${post.getAuthor()}"></p>
+    <p th:text="${post.getModifiedAt()}"></p>
+</div>
+
+<div>
+    <ul th:if="${list.size() == 0}">
+        <li>등록된 댓글이 없습니다.</li>
+    </ul>
+    <ul th:unless="${list.size() == 0}">
+        <li th:each="comment : ${list}">
+            <span th:text="${comment.getBody()}"></span>
+            <span th:text="${comment.getUsername()}"></span>
+        </li>
+    </ul>
+</div>
+
+<div id="comment-form">
+    <form th:action="@{/api/comment}" method="post">
+        <input type="hidden" name="postId" th:value="${post.getId()}">
+        <input type="text" name="body" placeholder="댓글을 입력하세요" required>
+        <button type="submit" id="comment-id-submit">댓글 등록</button>
+    </form>
+</div>
+
+
+</body>
+
+<script>
+    document.getElementById("comment-id-submit").addEventListener("click", function() {
+        var form = document.getElementById("comment-form");
+        var formData = new FormData(form);
+        var jsonObject = {};
+
+        for (var pair of formData.entries()) {
+            jsonObject[pair[0]] = pair[1];
+        }
+
+        var jsonData = JSON.stringify(jsonObject);
+        console.log(jsonData);  // 입력값을 JSON 형식으로 출력
+
+        // JSON 데이터를 서버로 전송하거나 필요한 작업을 수행할 수 있습니다.
+        // 예를 들어, fetch API를 사용하여 서버로 전송하는 등의 작업을 수행할 수 있습니다.
+    });
+</script>
+</html>
