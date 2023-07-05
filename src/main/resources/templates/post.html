@@ -38,7 +38,7 @@
 <body>
 <div class = "header"><!--배너, 회원 정보-->
   <h2>PLUG</h2>
-  <h4><span th:text="${Users.userName}"></span>님</h4>
+  <h4><span th:text="${username}"></span>님</h4>
 </div>
 <div>
   <div id="pli-info"> <!--플리 정보-->
@@ -51,7 +51,7 @@
   <div id="play-list"><!--플레이 리스트 입력-->
     <div id="contain-music">
       <table border="1"> <!--담은 음악 리스트-->
-        <caption>담은 음악</caption>
+        <caption>플레이 리스트</caption>
         <thead>
         <tr>
           <th>곡 제목</th>

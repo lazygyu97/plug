@@ -14,7 +14,6 @@ public class PostResponseDto {
     private String imageUrl;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-    //이게 맞나
     private User user;
 
     public PostResponseDto(Post post){
@@ -24,7 +23,7 @@ public class PostResponseDto {
         this.imageUrl = post.getImageUrl();
         this.createdAt = post.getCreatedAt();
         this.modifiedAt = post.getModifiedAt();
-        // ??
+        // 유저 정보를 받아오도록 함
         this.user = post.getUser();
     }
 }

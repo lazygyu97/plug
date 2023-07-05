@@ -31,6 +31,7 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
+    //데이터베이스가 아니면 어디에 저장..?
     @OneToMany(mappedBy = "user")
     private List<Post> postList = new ArrayList<>();
 
@@ -41,4 +42,9 @@ public class User {
         this.role=role;
     }
 
+    //
+    public void addPostList(Post post) {
+        this.postList.add(post);
+        post.setUser(this);
+    }
 }

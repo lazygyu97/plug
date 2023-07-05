@@ -44,7 +44,9 @@ public class Post extends Timestamped {
         this.title = requestDto.getTitle();
         this.info = requestDto.getInfo();
         this.imageUrl = requestDto.getImageUrl();
-        // ??
+        //  유저 정보 받기
         this.user = userDetails.getUser();
+        //뮤직 리스트 받기
+//        this.musicLists;
     }
 }

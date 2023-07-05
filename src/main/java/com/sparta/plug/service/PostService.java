@@ -15,19 +15,6 @@ public class PostService {
     
     private final PostRepository postRepository;
 
-    public PostResponseDto createPost(PostRequestDto requestDto, UserDetailsImpl userDetails){
-        Post post = new Post(requestDto, userDetails);
-
-        Post savePost = postRepository.save(post);
-
-        PostResponseDto postResponseDto = new PostResponseDto(savePost);
-
-        //userList에 포스트 추가
-        userDetails.getUser().getPostList().add(savePost);
-
-        return postResponseDto;
-    }
-
     public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
@@ -35,4 +22,19 @@ public class PostService {
 
         return null;
     }
+
+
+    public PostResponseDto createPost(PostRequestDto requestDto, UserDetailsImpl userDetails){
+        Post post = new Post(requestDto, userDetails); //타임스탬프가 안찍힘
+
+        Post savePost = postRepository.save(post);
+
+        PostResponseDto postResponseDto = new PostResponseDto(savePost);
+
+        //userList에 포스트 추가
+        userDetails.getUser().addPostList(savePost);
+
+        return postResponseDto;
+    }
+
 }
