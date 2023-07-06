@@ -86,14 +86,15 @@
 
     /*<![CDATA[*/
     function commentUpdateBtn(id) {
-        let feedId = [[${post.id}]];
+        const updatedContent = document.getElementById("comment-modify-input").value();
+
         $.ajax({
             type: "PUT",
-            url: `/api/comment/` + id,
-            // contentType: "application/json",
+            url: `/api/comment/${id}`,
+            contentType: "application/json",
             dataType : 'json',
             async : false,
-            data: JSON.stringify({ postId: id}),
+            data: JSON.stringify({body: updatedContent}),
             success : function (response) {
                 console.log('댓글 수정 완료', response);
                 findAllComment(); // 새로운 댓글 목록을 가져오는 함수 호출

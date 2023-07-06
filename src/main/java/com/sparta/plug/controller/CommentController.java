@@ -32,9 +32,9 @@ public class CommentController {
         try { // commentService.updateComment 메서드를 호출하여 댓글 수정 -> 예외가 발생하면 catch 블록으로 이동하여 예외를 처리
             commentService.updateComment(id, requestDto, userDetails.getUser()); // commentServiced의 updateComment(수정)을 실행하여 id, requestDto, userDetails.getUser()를 수정
             // commentService의 updateComment는 예외 발생 할 수 있다
-            return "댓글 수정을 성공했습니다.";
+            return "redirect:/api/comment/"+id;
         } catch (RejectedExecutionException exception) {
-            return "댓글 수정을 실패했습니다.";
+            return "redirect:/api/comment/"+id;
         }
 //        return "";
     }
