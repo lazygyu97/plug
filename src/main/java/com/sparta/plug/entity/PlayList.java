@@ -9,8 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "musicList")
-public class MusicList {
+@Table(name = "playList")
+public class PlayList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -8,7 +8,7 @@
   <style></style>
   <script>
     //수정 필요? 글 목록 페이지로 가기
-    // const host = 'http://' + window.location.host;
+    const host = 'http://' + window.location.host;
 
     //검색결과 붙이기
     // function getSearchList() {
@@ -58,7 +58,7 @@
         data: JSON.stringify({'title': title, 'info': info, 'imageUrl':imageUrl}),
       })
 
-      //window.location.href = host;
+      window.location.href = host;
     }
   </script>
 </head>
@@ -230,31 +230,31 @@
             });
   }
 
-  // // 폼 전송 시 선택한 트랙 리스트를 JSON 문자열로 변환하여 숨겨진 입력 필드의 값으로 설정
-  // document.getElementById("confirmButton").addEventListener("click", function () {
-  //   const selectedTracksInput = document.getElementById('selectedTracksInput');
-  //   selectedTracksInput.value = JSON.stringify(selectedTracks);
-  // });
-  //
-  // document.getElementById("post-id-submit").addEventListener("click", function () {
-  //   const form = document.getElementById("post-form");
-  //   const formData = new FormData(form); //에러
-  //   const jsonObject = {};
-  //
-  //   for (const pair of formData.entries()) {
-  //     jsonObject[pair[0]] = pair[1];
-  //   }
-  //   // 숨겨진 입력 필드의 값을 설정
-  //   const selectedTracksInput = document.getElementById('selectedTracksInput');
-  //   selectedTracksInput.value = jsonObject.selectedTracks;
-  //   // 선택한 트랙 리스트를 JSON 문자열로 변환하여 설정
-  //   jsonObject.selectedTracks = JSON.stringify(selectedTracks);
-  //
-  //   const jsonData = JSON.stringify(jsonObject);
-  //   console.log(jsonData);
-  //
-  //
-  // });
+  // 폼 전송 시 선택한 트랙 리스트를 JSON 문자열로 변환하여 숨겨진 입력 필드의 값으로 설정
+  document.getElementById("confirmButton").addEventListener("click", function () {
+    const selectedTracksInput = document.getElementById('selectedTracksInput');
+    selectedTracksInput.value = JSON.stringify(selectedTracks);
+  });
+
+  document.getElementById("post-id-submit").addEventListener("click", function () {
+    const form = document.getElementById("post-form");
+    const formData = new FormData(form); //에러
+    const jsonObject = {};
+
+    for (const pair of formData.entries()) {
+      jsonObject[pair[0]] = pair[1];
+    }
+    // 숨겨진 입력 필드의 값을 설정
+    const selectedTracksInput = document.getElementById('selectedTracksInput');
+    selectedTracksInput.value = jsonObject.selectedTracks;
+    // 선택한 트랙 리스트를 JSON 문자열로 변환하여 설정
+    jsonObject.selectedTracks = JSON.stringify(selectedTracks);
+
+    const jsonData = JSON.stringify(jsonObject);
+    console.log(jsonData);
+
+
+  });
 </script>
 </body>
 </html>

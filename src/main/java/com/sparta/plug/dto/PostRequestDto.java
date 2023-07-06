@@ -8,5 +8,5 @@ public class PostRequestDto {
     private String info;
     private String imageUrl;
 
-    //musicList??
+    //playList??
 }

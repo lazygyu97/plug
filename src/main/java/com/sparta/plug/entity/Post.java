@@ -13,8 +13,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @Table(name = "posts")
+@NoArgsConstructor
 public class Post extends Timestamped {
 
     @Id
@@ -35,10 +35,10 @@ public class Post extends Timestamped {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    //musicList 정보가 담긴 칼럼
+    //playList 정보가 담긴 칼럼
     @OneToMany
     @JoinColumn(name = "post_id")
-    private List<MusicList> musicLists = new ArrayList<>();
+    private List<PlayList> playLists = new ArrayList<>();
 
     public Post(PostRequestDto requestDto, UserDetailsImpl userDetails) {
         this.title = requestDto.getTitle();
@@ -47,6 +47,6 @@ public class Post extends Timestamped {
         //  유저 정보 받기
         this.user = userDetails.getUser();
         //뮤직 리스트 받기
-//        this.musicLists;
+//        this.playLists;
     }
 }
