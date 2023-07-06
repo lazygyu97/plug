@@ -1,5 +1,6 @@
 package com.sparta.plug.entity;
 
+import com.sparta.plug.dto.CommentRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,5 +40,9 @@ public class Comment extends TimeStamped {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    public void update(CommentRequestDto requestDto) {
+        this.body = requestDto.getBody();
     }
 }

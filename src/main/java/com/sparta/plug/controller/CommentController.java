@@ -43,9 +43,9 @@ public class CommentController {
     public String deleteComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
         try {
             commentService.deleteComment(id, userDetails.getUser()); // commentServiced의 deleteComment(삭제)을 실행하여 id, requestDto, userDetails.getUser()를 삭제
-            return "댓글 삭제를 성공했습니다.";
+            return "redirect:/api/post/"+id;
         } catch (RejectedExecutionException exception) {
-            return "댓글 삭제를 실패했습니다.";
+            return "redirect:/api/post/"+id;
         }
     }
 
