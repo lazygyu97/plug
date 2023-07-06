@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class CommentResponseDto extends ApiResponseDto {
+    private Long id;
     private String body;
     private String username;
     private LocalDateTime createdAt;
@@ -16,6 +17,7 @@ public class CommentResponseDto extends ApiResponseDto {
 
     public CommentResponseDto(Comment comment) {
         super();
+        this.id = comment.getId();
         this.body = comment.getBody();
         this.username = comment.getUser().getUsername();
         this.createdAt = comment.getCreatedAt();

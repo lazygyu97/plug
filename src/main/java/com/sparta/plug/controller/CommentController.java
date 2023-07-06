@@ -26,7 +26,7 @@ public class CommentController {
         return "redirect:/api/post/"+id;
     }
 
-    @PutMapping("/comment/{id}/update")
+    @PutMapping("/comment/{id}")
     public String updateComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
         // UserDetailsImpl 인증된 사용자 정보
         try { // commentService.updateComment 메서드를 호출하여 댓글 수정 -> 예외가 발생하면 catch 블록으로 이동하여 예외를 처리
@@ -36,9 +36,10 @@ public class CommentController {
         } catch (RejectedExecutionException exception) {
             return "댓글 수정을 실패했습니다.";
         }
+//        return "";
     }
 
-    @DeleteMapping("/comment/{id}/delete")
+    @DeleteMapping("/comment/{id}")
     public String deleteComment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long id) {
         try {
             commentService.deleteComment(id, userDetails.getUser()); // commentServiced의 deleteComment(삭제)을 실행하여 id, requestDto, userDetails.getUser()를 삭제
