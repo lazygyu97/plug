@@ -8,6 +8,53 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 
+    <script>
+        function commentUpdateBtn(id) {
+            const updatedContent = document.getElementById("comment-modify-input").value;
+
+            alert(updatedContent)
+
+            $.ajax({
+                type: "PUT",
+                url: `/api/comment` + id,
+                // contentType: "application/json",
+                dataType: 'json',
+                async: false,
+                data: JSON.stringify({body: updatedContent}),
+                success: function (response) {
+                    console.log('댓글 수정 완료', response);
+                    findAllComment(); // 새로운 댓글 목록을 가져오는 함수 호출
+                },
+                error: function (request, status, error) {
+                    console.log(error)
+                }
+            })
+        }
+
+
+        function commentDeleteBtn(id) {
+            let feedId = [[${post.id}]];
+            $.ajax({
+                type: "DELETE",
+                url: `/api/comment/` + id,
+                // contentType: "application/json",
+                dataType: 'json',
+                async: false,
+                data: JSON.stringify({postId: id}),
+                success: function (response) {
+                    console.log('댓글 삭제 완료', response);
+                    findAllComment(); // 새로운 댓글 목록을 가져오는 함수 호출
+                },
+                error: function (request, status, error) {
+                    console.log(error)
+                }
+            })
+        }
+
+
+    </script>
+
+
 </head>
 
 <body>
@@ -27,12 +74,13 @@
             <span th:text="${comment.getBody()}"></span>
             <span th:text="${comment.getUsername()}"></span>
 
-            <input id="comment-modify-input" placeholder="수정하실 댓글내용을 입력해 주세요.">
-            <button type="button" class="commentUpdateBtn" th:onclick="'commentUpdateBtn(' + ${comment.getId()} + ')'" >수정</button>
+            <button type="button" class="commentUpdateBtn" th:onclick="'commentUpdateBtn(' + ${comment.getId()} + ')'">
+                수정
+            </button>
 
-            <button type="button" class="commentDeleteBtn" th:onclick="'commentDeleteBtn(' + ${comment.getId()} + ')'" >삭제</button>
-
-
+            <button type="button" class="commentDeleteBtn" th:onclick="'commentDeleteBtn(' + ${comment.getId()} + ')'">
+                삭제
+            </button>
 
 
         </li>
@@ -67,7 +115,7 @@
         return auth;
     }
 
-    document.getElementById("comment-id-submit").addEventListener("click", function() {
+    document.getElementById("comment-id-submit").addEventListener("click", function () {
         var form = document.getElementById("comment-form");
         var formData = new FormData(form);
         var jsonObject = {};
@@ -84,55 +132,13 @@
 
     });
 
-    /*<![CDATA[*/
-    function commentUpdateBtn(id) {
-        const updatedContent = document.getElementById("comment-modify-input").value();
 
-        $.ajax({
-            type: "PUT",
-            url: `/api/comment/${id}`,
-            contentType: "application/json",
-            dataType : 'json',
-            async : false,
-            data: JSON.stringify({body: updatedContent}),
-            success : function (response) {
-                console.log('댓글 수정 완료', response);
-                findAllComment(); // 새로운 댓글 목록을 가져오는 함수 호출
-            },
-            error : function (request, status, error) {
-                console.log(error)
-            }
-        })
-    }
-    /*]]>*/
-
-        /*<![CDATA[*/
-        function commentDeleteBtn(id) {
-        let feedId = [[${post.id}]];
-        $.ajax({
-        type: "DELETE",
-        url: `/api/comment/` + id,
-        // contentType: "application/json",
-        dataType : 'json',
-        async : false,
-        data: JSON.stringify({postId: id}),
-        success : function (response) {
-        console.log('댓글 삭제 완료', response);
-        findAllComment(); // 새로운 댓글 목록을 가져오는 함수 호출
-    },
-        error : function (request, status, error) {
-        console.log(error)
-    }
-    })
-    }
-        /*]]>*/
-
-        function findAllComment() {
+    function findAllComment() {
         $.ajax({
             type: "GET",
             url: `/post/` + id,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 // 서버에서 받은 댓글 목록 데이터를 처리
                 // 받은 데이터를 반복문으로 순회하며 화면에 댓글을 추가
                 for (var i = 0; i < response.length; i++) {
@@ -140,15 +146,13 @@
                     // 댓글을 화면에 추가하는 로직
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.log("댓글 목록을 가져오는 동안 오류가 발생했습니다.");
                 console.log(error);
             }
 
         });
     }
-
-
 
 
 </script>

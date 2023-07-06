@@ -38,13 +38,17 @@ public class CommentService {
     }
 
     @Transactional
-    public void updateComment(Long id, CommentRequestDto requestDto, User user) {
+    public Comment updateComment(Long id, CommentRequestDto requestDto, User user) {
         Comment comment = commentRepository.findById(id).orElseThrow();
         if(user.getId().equals(comment.getUser().getId())) {
             comment.update(requestDto);
             System.out.println("댓글 삭제를 성공했습니다.");
+
+            return comment;
         } else {
             System.out.println("댓글 삭제를 실패했습니다.");
+
+            return comment;
         }
     }
 
