@@ -21,10 +21,10 @@
             <span th:text="${comment.getBody()}"></span>
             <span th:text="${comment.getUsername()}"></span>
 
-            <div class="comment-link" th:data-comment-id="${comment.getId()}">
-                <button type="button" class="commentUpdateBtn" data-comment_number="${comment.getId()}">수정</button>
-                <button type="button" class="commentDeleteBtn" data-comment_number="${comment.getId()}">삭제</button>
-            </div>
+            <input id="comment-modify-input" placeholder="수정하실 댓글내용을 입력해 주세요.">
+            <button type="button" class="commentUpdateBtn" th:onclick="commentUpdateBtn(${comment.getId})">수정</button>
+            <button type="button" class="commentDeleteBtn" th:onclick="commentDeleteBtn(${comment.getId})">삭제</button>
+
 
         </li>
     </ul>
@@ -56,28 +56,24 @@
         // 예를 들어, fetch API를 사용하여 서버로 전송하는 등의 작업을 수행할 수 있습니다.
 
 
-        function updateComment(button) {
-            var commentId = button.getAttribute("data-comment-id");
-            var form = document.getElementById("comment-form");
-            var formData = new FormData(form);
-            formData.append("commentId", commentId);
-            var jsonData = JSON.stringify(Object.fromEntries(formData));
-
-            // 수정 요청을 서버로 전송
-            fetch("/api/comment/update", {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: jsonData
+        commentUpdateBtn()
+        ${comment.getId}
+        /*<![CDATA[*/
+        function modifyComment(id) {
+            let feedId = [[${post.id}]];
+            let content = $('#comment-modify-input').val();
+            $.ajax({
+                type: "PUT",
+                url: `/api/post` + id,
+                contentType: "application/json",
+                data: JSON.stringify({feedId: feedId, content: content}),
+            }).done(function () {
+                alert("댓글수정 성공");
+            }).fail(function (res) {
+                alert(res.responseText);
             })
-                .then(response => {
-                    // 응답 처리 로직 작성
-                })
-                .catch(error => {
-                    // 오류 처리 로직 작성
-                });
         }
+        /*]]>*/
 
         function commentDeleteBtn(button) {
             var commentId = button.getAttribute("data-comment-id");
