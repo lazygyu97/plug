@@ -1,12 +1,14 @@
 package com.sparta.plug.entity;
 
 import com.sparta.plug.dto.PostRequestDto;
+import com.sparta.plug.security.UserDetailsImpl;
 import com.wrapper.spotify.model_objects.specification.Playlist;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -39,8 +41,12 @@ public class Post extends TimeStamped{
     @Column(nullable = false)
     private String author;
 
-//    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-//    private List<Playlist> playlists;
+
+    //playList 정보가 담길 예정 - 선언은 이곳에  했지만 DB테이블에는 play_list에 컬럼이 생김
+    @OneToMany
+    @JoinColumn(name = "post_id")
+    private List<PlayList> playLists = new LinkedList<>();
+
 
     public Post(PostRequestDto requestDto,User user){
         this.title=requestDto.getTitle();
@@ -48,10 +54,18 @@ public class Post extends TimeStamped{
         this.imageUrl=requestDto.getImageUrl();
         this.author=user.getNickName();
         this.user=user;
+        for(PlayList playList : requestDto.getPlayLists()) {
+            this.playLists.add(playList);
+        }
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 
+    public void update(PostRequestDto postRequestDto) {
+        this.title=postRequestDto.getTitle();
+        this.info= postRequestDto.getInfo();
+        this.imageUrl=postRequestDto.getImageUrl();
+        for(PlayList playList : postRequestDto.getPlayLists()) {
+            this.playLists.add(playList);
+        }
+    }
 }

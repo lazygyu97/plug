@@ -8,7 +8,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -27,7 +30,7 @@ public class HomeController {
 
         //메인페이지에서 보여줄 게시글들 가져오기
         List<PostResponseDto> list = postService.getAllPosts().getPostsList();
-
+        Collections.reverse(list);
         if (userDetails == null) {//로그인 x
             model.addAttribute("list",list);
             return "index";
@@ -38,6 +41,24 @@ public class HomeController {
         }
 
     }
+    @GetMapping("/{keyword}")
+    public String searchPost(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable String keyword, Model model){
+        List<PostResponseDto> post = postService.searchPost(keyword);
+        if(post==null){
+            return "index";
+        }
+        Collections.reverse(post);
+        if (userDetails == null) {//로그인 x
+            model.addAttribute("list",post);
+            return "index";
+        } else {//로그인 o
+            model.addAttribute("nickname", userDetails.getNickname());
+            model.addAttribute("list",post);
+            return "index";
+        }
+
+    }
+
 
 
 }

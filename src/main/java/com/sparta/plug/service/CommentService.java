@@ -6,11 +6,14 @@ import com.sparta.plug.dto.*;
 import com.sparta.plug.entity.Comment;
 import com.sparta.plug.entity.Post;
 import com.sparta.plug.entity.User;
+import com.sparta.plug.entity.UserRoleEnum;
 import com.sparta.plug.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.stream.Collectors;
 
 
@@ -35,4 +38,27 @@ public class CommentService {
 
         return new CommentResponseDto(savedComment);
     }
+    @Transactional
+    public CommentResponseDto updateComment(Long id, CommentRequestDto requestDto, User user) {
+        Comment comment = commentRepository.findById(id).orElseThrow();
+
+        if (!user.getId().equals(comment.getUser().getId())) {
+            throw new RejectedExecutionException();
+        }
+
+        comment.setBody(requestDto.getBody());
+
+
+        return new CommentResponseDto(comment);
+    }
+
+    public void deleteComment(Long id, User user) {
+        Comment comment = commentRepository.findById(id).orElseThrow();
+
+        if (!user.getId().equals(comment.getUser().getId())) {
+            throw new RejectedExecutionException();
+        }
+        commentRepository.delete(comment);
+    }
+
 }
