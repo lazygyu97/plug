@@ -25,12 +25,15 @@ public class PostService {
     private final PostRepository postRepository;
     private final PlayListRepository playListRepository;
 
+    //PostDto
+    //Post
     public PostListResponseDto getAllPosts() {
         List<PostResponseDto> postList = postRepository.findAll().stream().map(PostResponseDto::new).collect(Collectors.toList());
 
         return new PostListResponseDto(postList);
     }
 
+    //순환 참조 오류
     public PostResponseDto createPost(PostRequestDto postRequestDto, User user) {
 
         postRequestDto.stringToList();
@@ -68,10 +71,8 @@ public class PostService {
         if (!post.getUser().getId().equals(user.getId())) {
             throw new RejectedExecutionException();
         }
-
         post.setTitle(requestDto.getTitle());
         post.setInfo(requestDto.getInfo());
-
         return new PostResponseDto(post);
     }
 

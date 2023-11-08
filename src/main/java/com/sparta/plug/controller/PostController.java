@@ -16,8 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.Collections;
+
 import java.util.List;
 import java.util.concurrent.RejectedExecutionException;
 
@@ -25,6 +24,7 @@ import java.util.concurrent.RejectedExecutionException;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class PostController {
+// http:localhost:8080/api
     private final PostService postService;
     private final CommentService commentService;
     private final PlayListService playListService;

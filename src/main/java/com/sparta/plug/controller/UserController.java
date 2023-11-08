@@ -14,13 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@Slf4j
-@Controller
+@Slf4j // log 기능 가져오는 어노테이션
+@Controller // --> String
+//RestController  --> ResponseDto
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class UserController {
 
+    //의존성 주입
     private final UserService userService;
+//
+//    public UserController(UserService userService) {
+//        this.userService = userService;
+//    }
 
 
     @GetMapping("/user/login-page")

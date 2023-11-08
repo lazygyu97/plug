@@ -22,10 +22,11 @@ public class Post extends TimeStamped{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)//변경지연 --> 트랜잭션~
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    //포스트에 포함된 댓글이 같이 삭제된다.
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> comments;
 
@@ -45,7 +46,7 @@ public class Post extends TimeStamped{
     //playList 정보가 담길 예정 - 선언은 이곳에  했지만 DB테이블에는 play_list에 컬럼이 생김
     @OneToMany
     @JoinColumn(name = "post_id")
-    private List<PlayList> playLists = new LinkedList<>();
+    private List<PlayList> playLists = new LinkedList<>();//
 
 
     public Post(PostRequestDto requestDto,User user){

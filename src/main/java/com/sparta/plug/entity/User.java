@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "users")
+@Table(name = "users") // 생략 가능 - user
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

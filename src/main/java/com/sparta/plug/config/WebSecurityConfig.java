@@ -74,14 +74,14 @@ public class WebSecurityConfig {
                 formLogin
                         .loginPage("/api/user/login-page").permitAll()
                         .loginProcessingUrl("/api/user/login").permitAll()
-
-
         );
 
         // 필터 관리
         http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
+//        http.exceptionHandling().authenticationEntryPoint();
+//        http.exceptionHandling().accessDeniedHandler();
 //        // 접근 불가 페이지
 //        http.exceptionHandling((exceptionHandling) ->
 //                exceptionHandling

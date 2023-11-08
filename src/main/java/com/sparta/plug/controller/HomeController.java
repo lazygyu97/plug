@@ -25,9 +25,9 @@ public class HomeController {
         return "post";
     }
 
-    @GetMapping("/")
+    @GetMapping("/")                                      //로그인 성공 한 유저의 정보를 갖고 있는게
     public String home(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-
+        //model ->
         //메인페이지에서 보여줄 게시글들 가져오기
         List<PostResponseDto> list = postService.getAllPosts().getPostsList();
         Collections.reverse(list);
