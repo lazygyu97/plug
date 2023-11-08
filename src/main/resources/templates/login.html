@@ -1,70 +1,155 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="stylesheet" type="text/css" href="/css/style.css">
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-          integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
-  <meta charset="UTF-8">
-  <title>로그인 페이지</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
+    <style>
+        /* 로고 이미지 스타일 */
+        .logo-img {
+            max-width: 200px; /* 최대 너비를 200px로 지정 (원하는 크기로 변경 가능) */
+            width: 100%; /* 이미지 너비를 부모 요소에 맞춤 */
+            height: auto; /* 이미지 비율을 유지하면서 높이 자동 조정 */
+            display: block; /* 인라인 요소를 블록 요소로 변경하여 가운데 정렬에 적용 */
+            margin: 0 auto; /* 가로 가운데 정렬을 위해 좌우 마진을 auto로 지정 */
+            margin-bottom: 30px; /* 이미지 아래 여백 추가 */
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f1f1f1;
+        }
+
+        #login-form {
+            text-align: center;
+            padding: 40px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        /* 아이디, 비밀번호 입력창 스타일 */
+        .login-input-box {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            font-size: 16px;
+            box-sizing: border-box; /* 패딩과 경계선 포함한 크기 계산 */
+        }
+
+        .login-input-box {
+            /* 기존 스타일 유지 */
+            position: relative; /* 상대 위치 지정 */
+        }
+
+        .login-input-box input {
+            /* input 스타일 */
+            text-align: center; /* 가운데 정렬 */
+        }
+
+        .login-input-box input::-webkit-input-placeholder {
+            /* Webkit 브라우저 (Chrome, Safari 등)용 placeholder 스타일 */
+            /* 기존 스타일 유지 */
+            position: absolute; /* 절대 위치 지정 */
+            top: 50%; /* 위에서 50% 위치에 */
+            left: 0; /* 왼쪽 끝에 */
+            width: 100%; /* 전체 너비 */
+            transform: translateY(-50%); /* 요소의 중심이 부모 요소의 중심에 오도록 조정 */
+            color: #999; /* placeholder 색상 설정 */
+        }
+
+        /* 로그인 버튼 스타일 */
+        #login-id-submit,
+        #login-id-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+            outline: none;
+            margin-bottom: 20px;
+
+        }
+
+        #login-id-submit:hover,
+        #login-id-btn:hover {
+            background-color: #555;
+        }
+
+        #login-failed {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>PLUG::로그인 페이지</title>
 </head>
 <body>
 <div id="login-form">
-  <div id="login-title">Log into plug</div>
-  <br>
-  <br>
-  <button id="login-id-btn" onclick="location.href='/api/user/signup'">
-    회원 가입하기
-  </button>
-  <div>
-    <div class="login-id-label">아이디</div>
-    <input type="text" name="username" id="username" class="login-input-box">
+    <img src="/images/Logo.png" class="logo-img">
 
-    <div class="login-id-label">비밀번호</div>
-    <input type="password" name="password" id="password" class="login-input-box">
-
+    <input type="text" name="username" id="username" class="login-input-box" placeholder="아이디">
+    <input type="password" name="password" id="password" class="login-input-box" placeholder="비밀번호">
     <button id="login-id-submit" onclick="onLogin()">로그인</button>
-  </div>
-  <div id="login-failed" style="display: none" class="alert alert-danger" role="alert">로그인에 실패하였습니다.</div>
+    <button id="login-id-btn" onclick="location.href='/api/user/signup'">
+        회원 가입하기
+    </button>
+    <div id="login-failed" style="display: none" class="alert alert-danger" role="alert">로그인에 실패하였습니다.</div>
 </div>
 </body>
 <script>
-  $(document).ready(function () {
-    // 토큰 삭제
-    Cookies.remove('Authorization', {path: '/'});
-  });
+    $(document).ready(function () {
+        // 토큰 삭제
+        Cookies.remove('Authorization', {path: '/'});
+    });
 
-  const host = 'http://' + window.location.host;
+    const host = 'http://' + window.location.host;
 
-  const href = location.href;
-  const queryString = href.substring(href.indexOf("?")+1)
-  if (queryString === 'error') {
-    const errorDiv = document.getElementById('login-failed');
-    errorDiv.style.display = 'block';
-  }
+    const href = location.href;
+    const queryString = href.substring(href.indexOf("?") + 1)
+    if (queryString === 'error') {
+        const errorDiv = document.getElementById('login-failed');
+        errorDiv.style.display = 'block';
+    }
 
-  function onLogin() {
-    let username = $('#username').val();
-    let password = $('#password').val();
+    function onLogin() {
+        let username = $('#username').val();
+        let password = $('#password').val();
 
-    $.ajax({
-      type: "POST",
-      url: `/api/user/login`,
-      contentType: "application/json",
-      data: JSON.stringify({username: username, password: password}),
-    })
+        $.ajax({
+            type: "POST",
+            url: `/api/user/login`,
+            contentType: "application/json",
+            data: JSON.stringify({username: username, password: password}),
+        })
             .done(function (res, status, xhr) {
-              window.location.href = host;
+                window.location.href = host;
             })
             .fail(function (xhr, textStatus, errorThrown) {
-              console.log('statusCode: ' + xhr.status);
-              window.location.href = host + '/api/user/login-page?error'
+                console.log('statusCode: ' + xhr.status);
+                window.location.href = host + '/api/user/login-page?error'
             });
-  }
+    }
 </script>
 </html>

@@ -5,24 +5,19 @@ import com.sparta.plug.entity.User;
 import com.sparta.plug.entity.UserRoleEnum;
 import com.sparta.plug.jwt.JwtUtil;
 import com.sparta.plug.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-//@RequiredArgsConstructor --> 필요한 생성자 자동으로 만들어줌
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtil = jwtUtil;
-    }
 
     // ADMIN_TOKEN
     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
@@ -31,6 +26,7 @@ public class UserService {
     public void signup(SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
+        String nickName = requestDto.getNickName();
 
         // 회원 중복 확인 --> Entity 에서도  @Column(nullable = false, unique = true) 이런식으로 고유값으로 선언해야한다
         Optional<User> checkUsername = userRepository.findByUsername(username);
@@ -55,7 +51,7 @@ public class UserService {
         }
 
         // 사용자 등록
-        User user = new User(username, password, email, role);
+        User user = new User(nickName,username, password, email,role);
         userRepository.save(user);
     }
 

@@ -6,34 +6,116 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
     <script src="/js/basic.js"></script>
+
     <title>PLUG::우리들의 플레이리스트 공유 공간</title>
+    <style>
+        /* 검색 창 스타일 */
+        .search-bar {
+            margin: 10px auto;
+            max-width: 400px;
+            display: flex;
+            margin-bottom: 50px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            background-color: #eaeaea;
+            color: #333;
+            border: 1px solid #a2a2a2;
+            border-radius: 0 4px 4px 0;
+            font-size: 16px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .search-button:hover {
+            background-color: #5b5b5b;
+        }
+    </style>
 </head>
 <body>
 <div class="header" style="position:relative;">
+    <img src="/images/Logo.png" onclick="goHome()" class="logo-img">
+    <script th:inline="javascript">
+        function goHome(){
+            window.location.href="/"
+        }
+
+    </script>
+
     <div id="login-true" style="display: none">
         <div id="header-title-login-user">
-            <span th:text="${username}"></span> 님의
+            <span th:text="${nickname}"></span>님 환영합니다!
+            <a class="login-btn" href="javascript:logout()">
+                로그아웃
+            </a>
+
         </div>
-        <div id="header-title-select-shop">
-            PLUG
+        <div style="margin-top: 10px;margin-left: 30px;">
+            <a href="/api/user/detail"class="login-btn">마이페이지</a>
+            <a class="login-btn"id="post-create" href="/post-page">
+                글쓰기
+            </a>
         </div>
-        <a id="login-text" href="javascript:logout()">
-            로그아웃
-        </a>
+
     </div>
-    <div id="login-false" >
-        <div id="header-title-select-shop">
-            PLUG
-        </div>
-        <a id="login-text" href="/api/user/login-page">
+
+    <div  id="login-false">
+        <a class="login-btn" href="/api/user/login-page">
             로그인
         </a>
     </div>
+
+    <div class="search-bar">
+        <input type="text" id="keyword"class="search-input" placeholder="검색어를 입력하세요">
+        <button class="search-button" >검색</button>
+    </div>
 </div>
+<!-- 리스트 데이터를 반복하며 출력 -->
+<div>
+    <div class="card" style="width: 18rem;" th:each="post : ${list}">
+        <div class="post-link" th:data-post-id="${post.getId()}">
+            <img th:src="${post.getImageUrl()}" class="card-img-top" alt="...">
+            <div class="card-body" style="text-align: center;">
+
+                <h5 class="card-title" th:text="${post.getTitle()}">Card title</h5>
+                <p class="card-text" th:text="${post.getInfo()}">.</p>
+                <p class="card-text" th:text="'by.'+${post.getAuthor()}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </body>
+
+<script>
+    $(document).ready(function () {
+        // 리스트 데이터를 반복하며 출력된 div.post-link에 클릭 이벤트 바인딩
+        $(".post-link").click(function () {
+            var postId = $(this).data("post-id");
+            window.location.href = "/api/post/" + postId;
+        });
+        $(".search-button").click(function () {
+            var keyword =document.getElementById('keyword').value
+            window.location.href = "/" + keyword;
+        });
+    });
+</script>
 </html>

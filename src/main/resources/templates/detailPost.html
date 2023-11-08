@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'PLUG::'+${post.getTitle()}">Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0 800px;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 10px 20px;
+            margin-top: 50px;
+
+        }
+
+        .logo-img {
+            max-width: 20%; /* 이미지의 최대 너비를 50%로 설정 */
+            height: auto; /* 이미지의 높이를 자동으로 조정 */
+            display: block; /* 이미지를 블록 요소로 설정 */
+            margin-left: auto; /* 좌우 여백을 자동으로 조정하여 가운데 정렬 */
+            margin-right: auto;
+        }
+
+        #login-true,
+        #login-false {
+            display: flex;
+            align-items: center;
+        }
+
+        .login-btn {
+            background-color: #ccc;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 3px;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .search-input {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+
+        .search-button {
+            background-color: #333;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+        }
+
+        .content {
+            margin: 20px;
+            text-align: center;
+        }
+
+        .post-info {
+            font-weight: bold;
+        }
+
+        .comment-list,
+        .track-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0;
+            text-align: left;
+        }
+
+        .comment-list li,
+        .track-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            border: 1px solid #ccc; /* 댓글 및 트랙 요소에 테두리 추가 */
+            border-radius: 5px; /* 댓글 및 트랙 요소에 둥근 테두리 추가 */
+            padding: 10px; /* 댓글 및 트랙 요소에 내부 패딩 추가 */
+        }
+
+        .comment-body,
+        .track-info {
+            flex: 1;
+            margin-left: 10px;
+        }
+
+        .track-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%; /* 트랙 이미지에 둥근 모양 적용 */
+        }
+
+        .comment-form {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .comment-input {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+
+        .comment-submit {
+            background-color: #333;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/basic.js"></script>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
+    <script>
+    $(document).ready(function () {
+
+            $('#default').show();
+            $('#edit').hide();
+
+    })
+
+
+</script>
+</head>
+<body>
+<div class="header">
+    <img src="/images/Logo.png" onclick="goHome()" class="logo-img">
+    <script th:inline="javascript">
+        function goHome(){
+            window.location.href="/"
+        }
+
+    </script>
+</div>
+
+<div id="default" class="content" style="display: flex; justify-content: center; align-items: center;margin-top: 50px;">
+    <div style="display: flex; align-items: center;">
+        <img class="track-image" th:src="${tracks.get(0).getImageUrl()}"
+             style="width: 180px; height: 180px; border-radius: 50%;">
+        <div style="margin-left: 50px;">
+            <h2 id th:text="${post.getTitle()}"></h2>
+            <p class="post-info" th:text="${post.getInfo()}"></p>
+            <p th:text="${post.getAuthor()}"></p>
+            <p th:text="${post.getModifiedAt()}"></p>
+            <button type="button" id="onEdit" onclick="onEdit()">수정</button>
+            <script th:inline="javascript">
+                function onEdit() {
+                    $('#default').hide();
+                    $('#edit').show();
+                }
+            </script>
+            <button onclick="postDeleteBtn()">삭제</button>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="edit" class="content" style="display: none; justify-content: center; align-items: center;margin-top: 100px;">
+    <div style="display: flex; align-items: center;">
+        <img class="track-image" th:src="${tracks.get(0).getImageUrl()}"
+             style="width: 180px; height: 180px; border-radius: 50%;">
+        <div style="margin-left: 50px;">
+            <input id="postTitle" type="text" th:value="${post.getTitle()}">
+            <input  id="postInfo"  type="text" th:value="${post.getInfo()}">
+
+            <button type="button" id="editPage-button" onclick="postUpdateBtn()">수정</button>
+            <script th:inline="javascript">
+                function postUpdateBtn(){
+                    var title=document.getElementById('postTitle').value
+                    var info=document.getElementById('postInfo').value
+                    var postId = [[${postId}]];
+                    $.ajax({
+                        type: "PUT",
+                        url: `/api/posts/` + postId,
+                        contentType: "application/json",
+                        data: JSON.stringify({postId: postId,title:title,info:info}),
+                    }).done(function () {
+                        alert("글 수정 성공");
+                        window.location.href = "/api/post/" + postId;
+                    }).fail(function (res) {
+                        alert("작성자만 수정 할 수 있습니다.");
+                        window.location.href = "/api/post/" + postId;
+                    });
+                }
+
+            </script>
+            <button onclick="postDeleteBtn()">삭제</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div style="background-color: #f1f1f1; padding: 10px; margin-top: 100px; border-radius: 30px">
+    <h3>트랙리스트</h3>
+    <div style="max-height: 350px; overflow-y: scroll;">
+        <ul class="track-list" th:unless="${tracks.size() == 0}">
+            <li th:each="track, iterStat : ${tracks}" th:if="${iterStat.index} &lt; 5">
+                <img class="track-image" th:src="${track.getImageUrl()}">
+                <div class="track-info">
+                    <span th:text="${track.getName()}"></span>
+                    <span th:text="${track.getArtist()}"></span>
+                </div>
+                <audio th:src="${track.getPreviewUrl()}" controls></audio>
+            </li>
+        </ul>
+        <ul class="track-list" th:if="${tracks.size() == 0}">
+            <li>등록된 트랙이 없습니다.</li>
+        </ul>
+    </div>
+</div>
+
+<div style="background-color: #f1f1f1; padding: 10px; margin-top: 50px; border-radius: 30px;">
+    <h3>댓글</h3>
+    <div>
+        <ul class="comment-list" th:if="${list.size() == 0}">
+            <li>등록된 댓글이 없습니다.</li>
+        </ul>
+        <ul class="comment-list" th:unless="${list.size() == 0}">
+            <li th:each="comment : ${list}">
+                <span class="comment-body" th:text="${comment.getBody()}"></span>
+                <span th:text="${comment.getUsername()}"></span>
+                <div style="display: none">
+                    <input type="hidden" id="get-id" th:text="${comment.getId()}">
+                </div>
+
+
+                <button type="button" class="commentUpdateBtn" th:onclick="'viewUpdate(' + ${comment.getId()} + ')'">
+                    수정
+                </button>
+                <button type="button" class="commentDeleteBtn"
+                        th:onclick="'commentDeleteBtn(' + ${comment.getId()} + ')'">삭제
+                </button>
+
+            </li>
+        </ul>
+    </div>
+
+
+
+
+
+
+    <div style="display:none;" id="update-comment">
+        <div style="display: none">
+            <input id="commentId" type="text" value="">
+        </div>
+        <input type="text" id="comment-modify-input" placeholder="수정하실 댓글내용을 입력해 주세요.">
+        <button type="button" class="commentUpdateBtn" onclick="commentUpdateBtn()">확인</button>
+
+    </div>
+    <div class="comment-form">
+        <form th:action="@{/api/comment}" method="post">
+            <input type="hidden" name="postId" th:value="${post.getId()}">
+            <input class="comment-input" type="text" name="body" placeholder="댓글을 입력하세요"
+                   style="width: 80%; min-width: 300px;" required>
+            <button class="comment-submit" type="submit">댓글 등록</button>
+
+        </form>
+    </div>
+</div>
+
+
+</body>
+<script >
+
+
+    /*<![CDATA[*/
+    function commentUpdateBtn() {
+        const updatedContent = document.getElementById("comment-modify-input").value;
+        const id = document.getElementById("commentId").value;
+        var postId = [[${postId}]];
+        $.ajax({
+            type: "PUT",
+            url: `/api/comment/` + id,
+            contentType: "application/json",
+            data: JSON.stringify({postId: id, body: updatedContent}),
+        }).done(function () {
+            alert("댓글 수정 성공");
+            window.location.href = "/api/post/" + postId;
+        }).fail(function (res) {
+            alert("작성자만 수정 할 수 있습니다.");
+            window.location.href = "/api/post/" + postId;
+        });
+    }
+    /*]]>*/
+
+    /*<![CDATA[*/
+    function commentDeleteBtn(id) {
+        var postId = [[${postId}]];
+        $.ajax({
+            type: "DELETE",
+            url: `/api/comment/` + id,
+            contentType: "application/json",
+            data: JSON.stringify({postId: id}),
+        }).done(function () {
+            alert("댓글 삭제 성공");
+            window.location.href = "/api/post/" +postId;
+        }).fail(function (res) {
+            alert("작성자만 삭제 할 수 있습니다.");
+            window.location.href = "/api/post/" + postId;
+        });
+    }
+    /*]]>*/
+    function postDeleteBtn() {
+        var postId = [[${postId}]];
+        $.ajax({
+            type: "DELETE",
+            url: `/api/posts/` + postId,
+            contentType: "application/json",
+            data: JSON.stringify({postId: postId}),
+        }).done(function () {
+            alert("글 삭제 성공");
+            window.location.href = "/";
+        }).fail(function (res) {
+            alert("글 작성자만 삭제 할 수 있습니다.");
+            window.location.href = "/api/post/" + postId;
+        });
+    }
+
+
+    function viewUpdate(id) {
+        document.getElementById('update-comment').style.display = "inline";
+        document.getElementById('commentId').value=id;
+    }
+</script>
+<script>
+
+    document.getElementById("comment-id-submit").addEventListener("click", function () {
+        var form = document.getElementById("comment-form");
+        var formData = new FormData(form);
+        var jsonObject = {};
+
+        for (var pair of formData.entries()) {
+            jsonObject[pair[0]] = pair[1];
+        }
+
+        var jsonData = JSON.stringify(jsonObject);
+        console.log(jsonData);  // 입력값을 JSON 형식으로 출력
+
+        // JSON 데이터를 서버로 전송하거나 필요한 작업을 수행할 수 있습니다.
+        // 예를 들어, fetch API를 사용하여 서버로 전송하는 등의 작업을 수행할 수 있습니다.
+    });
+
+</script>
+</html>
+

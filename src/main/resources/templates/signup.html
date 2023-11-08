@@ -1,137 +1,161 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
-
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title>PLUG::회원가입</title>
 
-    <meta charset="UTF-8">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
 
-    <title>PULG LOGIN</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
+        #login-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 600px; /* 사이즈를 조정할 수 있습니다 */
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-img {
+            width: 200px; /* 로고 이미지 사이즈 조정 */
+        }
+
+        #login-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .login-id-label {
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .login-input-box {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        #admin-check {
+            margin-top: 20px;
+        }
+
+        #admin-token {
+            display: none;
+            margin-top: 10px;
+        }
+
+        #login-id-submit {
+            background-color: #333333;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        #login-id-submit:hover {
+            background-color: #5b5b5b;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            text-align: left;
+        }
+
+        .success-message {
+            color: #2f2f2f;
+            font-size: 14px;
+            margin-top: 5px;
+            text-align: left;
+        }
+    </style>
     <script>
-
         function onclickAdmin() {
-            // Get the checkbox
             var checkBox = document.getElementById("admin-check");
-            // Get the output text
             var box = document.getElementById("admin-token");
 
-            // If the checkbox is checked, display the output text
-            if (checkBox.checked == true) {
+            if (checkBox.checked) {
                 box.style.display = "block";
             } else {
                 box.style.display = "none";
             }
         }
 
-        document.getElementById("login-id-submit").addEventListener("click", function (event) {
-            event.preventDefault();
-            alert("회원가입이 완료되었습니다.");
-            window.location.href = "login.html";
-        });
+        function validatePassword() {
+            var password = document.getElementById("password");
+            var confirmPassword = document.getElementById("confirm-password");
+            var error = document.getElementById("password-error");
+            var success = document.getElementById("password-success");
+            var submitButton = document.getElementById("login-id-submit");
 
+            if (password.value !== confirmPassword.value) {
+                error.style.display = "block";
+                success.style.display = "none";
+                confirmPassword.style.borderColor = "red";
+                submitButton.disabled = true; // 비밀번호가 일치하지 않을 경우, 회원 가입 버튼 클릭 비활성화
+            } else {
+                error.style.display = "none";
+                success.style.display = "block";
+                confirmPassword.style.borderColor = "green";
+                submitButton.disabled = false; // 비밀번호가 일치할 경우, 회원 가입 버튼 활성화
+            }
+        }
     </script>
 </head>
-
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Noto Sans KR", sans-serif;
-    }
-
-    a {
-        text-decoration: none;
-        color: black;
-    }
-
-    .wrap {
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0, 0, 0, 0.1);
-    }
-
-    .singup {
-        width: 30%;
-        height: 600px;
-        background: white;
-        border-radius: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
-
-    .singup_id {
-        margin-top: 20px;
-        width: 80%;
-    }
-
-    .singup_id input {
-        width: 100%;
-        height: 50px;
-        border-radius: 30px;
-        margin-top: 10px;
-        padding: 0px 20px;
-        border: 1px solid lightgray;
-        outline: none;
-    }
-
-    .submit {
-        margin-top: 50px;
-        width: 80%;
-
-    }
-
-    .submit input {
-        width: 100%;
-        height: 50px;
-        border: 0;
-        outline: none;
-        border-radius: 40px;
-        background: linear-gradient(to left, rgb(223, 223, 223), rgb(51, 50, 50));
-        color: white;
-        font-size: 1.2em;
-        letter-spacing: 2px;
-    }
-</style>
-
 <body>
-<div class="wrap">
-    <div class="singup">
-        <form action="/api/user/signup" method="post">
-        <img src="/image/pulgImage.jpg" alt="PLUG로고" style="width:220px; height:132px; margin-left: 50px;"><br>
-        <a>우리들의 플레이리스트 공유 공간</a>
-        <br>
-        <div class="singup_id">
-            <input type="text" name="username" placeholder="Username" class="login-input-box"><br>
-            <input type="password" name="password" class="login-input-box" placeholder="password"><br>
-            <input type="text" name="email" class="login-input-box" placeholder="E-mail">
-        </div>
-        <div>
-            <input id="admin-check" type="checkbox" name="admin" onclick="onclickAdmin()" style="margin-top: 40px;">관리자
-            <input id="admin-token" type="password" name="adminToken" placeholder="관리자 암호" class="login-input-box"
-                   style="display:none">
-        </div>
-        <div class="submit">
-            <a href="http://localhost:63342/plug/plug/src/main/resources/templates/login.html?_ijt=neoru2l1g6dbbk71tefl5l6jaj&_ij_reload=RELOAD_ON_SAVE">
-                <input type="submit" value="SING UP">
-            </a>
-        </div>
-        </form>
+<div id="login-form">
+    <div class="logo-container">
+        <img src="/images/Logo.png" class="logo-img">
     </div>
+    <div id="login-title">회원가입</div>
+
+    <form action="/api/user/signup" method="post">
+        <input type="text" name="nickName" placeholder="닉네임(최소 2글자에서 최대 8글자로 설정 할 수 있습니다.)" class="login-input-box">
+        <input type="text" name="username" placeholder="사용자명(3~16자의 영문 대소문자, 숫자, 특수문자(_,-)만 사용할 수 있습니다.)"
+               class="login-input-box">
+        <input type="password" id="password" name="password"
+               placeholder="비밀번호(8~16자리 수 영문 대소문자, 숫자, 특수문자를 1개 이상 포함해야 합니다.)" class="login-input-box">
+        <input type="password" id="confirm-password" name="confirmPassword" placeholder="비밀번호 확인"
+               class="login-input-box">
+        <div id="password-error" class="error-message" style="display: none;">비밀번호가 일치하지 않습니다.</div>
+        <div id="password-success" class="success-message" style="display: none;">비밀번호가 일치합니다.</div>
+        <input type="text" name="email" placeholder="이메일(유효한 이메일 형식이 아닙니다.)" class="login-input-box">
+        <div>
+            <input id="admin-check" type="checkbox" name="admin" onclick="onclickAdmin()">관리자
+            <input id="admin-token" type="password" name="adminToken" placeholder="관리자 암호" class="login-input-box">
+        </div>
+        <button id="login-id-submit" onclick="validatePassword()">회원 가입</button>
+    </form>
 </div>
 </body>
 </html>

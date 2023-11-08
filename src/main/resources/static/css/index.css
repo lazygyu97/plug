@@ -1,0 +1,98 @@
+/* 스타일.css 파일 */
+/* 로그인 버튼 스타일 */
+.login-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #eaeaea;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #ddd;
+}
+
+.login-btn:focus {
+    outline: none;
+}
+/* 바디 좌우 여백 */
+.header{
+    margin-top: 50px;
+}
+body {
+    margin: 0 800px;
+}
+
+/* 로고 좌측 상단에 배치 */
+#login-true img {
+    position: absolute;
+    top: 10px;
+    left: 40px;
+}
+
+/* 로고 이미지 스타일 */
+.logo-img {
+    max-width: 20%; /* 이미지의 최대 너비를 50%로 설정 */
+    height: auto; /* 이미지의 높이를 자동으로 조정 */
+}
+
+/* 로그인 영역과 비로그인 영역 우측 상단에 배치 */
+#login-true,
+#login-false {
+    position: absolute;
+    top: 10px;
+    right: 40px;
+}
+
+/* 스타일.css 파일 */
+
+/* 카드 스타일 */
+.card {
+    width: calc(33.3333% - 40px);
+    margin: 10px;
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.47);
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card .card-img-top {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.card .card-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card .card-text {
+    margin-top: 10px;
+    color: #555;
+}
+
+/* 반응형 스타일: 카드 크기 조정 */
+@media (max-width: 768px) {
+    .card {
+        width: calc(50% - 40px);
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 100%;
+    }
+}
